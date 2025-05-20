@@ -7,27 +7,31 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 
-typedef int (*t_command_func)(struct s_shell *, char **);
+typedef struct s_shell t_shell;
+
+typedef int (*func)(struct s_shell *, char **);
 
 typedef struct s_command
 {
     char **args;
-    char *input_file;
-    char *out_file;
-}   t_command;
+}       t_command;
 
 typedef struct s_buildin
 {
     char *name;
-    t_command_func func;
+    func cmd_func;
 }   t_buildin;
 
 
-typedef struct s_shell
+struct s_shell
 {
     char **env_copy;
-    t_buildin buildinds[7];
+    t_buildin buildinds[8];
 
-}   t_shell;
+};
+
+char **copy_env(char **env);
+void init_buildin(t_shell *shell);
+int execute_command(t_shell *shell ,t_command *cmd);
 
 #endif
