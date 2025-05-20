@@ -7,6 +7,8 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 
+typedef int (*t_command_func)(struct s_shell *, char **);
+
 typedef struct s_command
 {
     char **args;
@@ -14,9 +16,18 @@ typedef struct s_command
     char *out_file;
 }   t_command;
 
+typedef struct s_buildin
+{
+    char *name;
+    t_command_func func;
+}   t_buildin;
+
+
 typedef struct s_shell
 {
     char **env_copy;
+    t_buildin buildinds[7];
+
 }   t_shell;
 
 #endif
